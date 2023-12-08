@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=3 uid="uid://chnm2bpphdgyw"]
+
+[ext_resource type="Texture2D" uid="uid://xa1hehst767v" path="res://assets/Game Objects/base.png" id="1_bwp33"]
+
+[sub_resource type="Animation" id="Animation_uk8m3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_v23lh"]
+resource_name = "roll"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-48, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1tdf8"]
+_data = {
+"RESET": SubResource("Animation_uk8m3"),
+"roll": SubResource("Animation_v23lh")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0550k"]
+size = Vector2(336, 110)
+
+[node name="Ground" type="StaticBody2D"]
+collision_layer = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_bwp33")
+centered = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "roll"
+libraries = {
+"": SubResource("AnimationLibrary_1tdf8")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(168, 57)
+shape = SubResource("RectangleShape2D_0550k")

@@ -1,0 +1,154 @@
+[gd_scene load_steps=12 format=3 uid="uid://dja3r0j8b35xs"]
+
+[ext_resource type="Script" path="res://tsn/bird/bird.gd" id="1_njwl4"]
+[ext_resource type="Texture2D" uid="uid://bhu7e7cmt0ui4" path="res://assets/Game Objects/yellowbird-downflap.png" id="1_yra21"]
+[ext_resource type="Texture2D" uid="uid://cp6jp2fti8ehb" path="res://assets/Game Objects/yellowbird-midflap.png" id="2_tm0cw"]
+[ext_resource type="Texture2D" uid="uid://csa3llwn71q7w" path="res://assets/Game Objects/yellowbird-upflap.png" id="3_06qe6"]
+[ext_resource type="AudioStream" uid="uid://dduu7jqex72ye" path="res://assets/Sound Efects/wing.ogg" id="5_rjf2t"]
+[ext_resource type="AudioStream" uid="uid://ddoog8wta0ytl" path="res://assets/Sound Efects/die.ogg" id="6_bsmc1"]
+
+[sub_resource type="Animation" id="Animation_wk2oc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_yra21")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Music:stream")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_rjf2t")]
+}
+
+[sub_resource type="Animation" id="Animation_o7smo"]
+resource_name = "fly"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("1_yra21"), ExtResource("2_tm0cw"), ExtResource("3_06qe6"), ExtResource("2_tm0cw"), ExtResource("1_yra21")]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Music")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [],
+"times": PackedFloat32Array()
+}
+tracks/1/use_blend = true
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Music:stream")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.100021),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_rjf2t")]
+}
+
+[sub_resource type="Animation" id="Animation_aqeom"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("1_yra21"), ExtResource("2_tm0cw"), ExtResource("3_06qe6"), ExtResource("2_tm0cw"), ExtResource("1_yra21")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -5), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0dxiv"]
+_data = {
+"RESET": SubResource("Animation_wk2oc"),
+"fly": SubResource("Animation_o7smo"),
+"idle": SubResource("Animation_aqeom")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8aq7y"]
+radius = 9.0
+
+[node name="Bird" type="RigidBody2D"]
+collision_mask = 14
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_njwl4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -5)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_yra21")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "idle"
+libraries = {
+"": SubResource("AnimationLibrary_0dxiv")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_8aq7y")
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_rjf2t")
+
+[node name="Die" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_bsmc1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

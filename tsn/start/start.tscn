@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://chmt8amj2gamw"]
+
+[ext_resource type="Script" path="res://tsn/start/start.gd" id="1_vdjh6"]
+[ext_resource type="Texture2D" uid="uid://x03j44shib5l" path="res://assets/Game Objects/background-day.png" id="2_g2ujo"]
+[ext_resource type="Texture2D" uid="uid://ceokfkb7br4o8" path="res://assets/UI/message.png" id="3_skrd2"]
+[ext_resource type="AudioStream" uid="uid://m361egybwf01" path="res://assets/Sound Efects/bg2.ogg" id="4_0dywr"]
+[ext_resource type="PackedScene" uid="uid://chnm2bpphdgyw" path="res://tsn/main/ground.tscn" id="5_vjf0p"]
+
+[node name="Start" type="Node2D"]
+script = ExtResource("1_vdjh6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_g2ujo")
+centered = false
+
+[node name="Message" type="Sprite2D" parent="."]
+position = Vector2(144, 231)
+texture = ExtResource("3_skrd2")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_0dywr")
+volume_db = -4.348
+autoplay = true
+
+[node name="Ground" parent="." instance=ExtResource("5_vjf0p")]
+position = Vector2(0, 401)

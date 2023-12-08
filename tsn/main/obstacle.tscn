@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdwmns5b0qf4j"]
+
+[ext_resource type="Script" path="res://tsn/main/obstacle.gd" id="1_erd0w"]
+[ext_resource type="AudioStream" uid="uid://byf8ngidxo6jk" path="res://assets/Sound Efects/point.ogg" id="3_2f1xf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_khxql"]
+
+[node name="Obstacle" type="Node2D"]
+script = ExtResource("1_erd0w")
+
+[node name="score_area" type="Area2D" parent="."]
+position = Vector2(43, 112)
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="score_area"]
+shape = SubResource("RectangleShape2D_khxql")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_2f1xf")
+
+[connection signal="body_exited" from="score_area" to="." method="_on_score_area_body_exited"]

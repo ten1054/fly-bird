@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://de2tlg22umlok"
+path="res://.godot/imported/bg.ogg-5f573cfc5d56c0e83e34a740292387d9.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Sound Efects/bg.ogg"
+dest_files=["res://.godot/imported/bg.ogg-5f573cfc5d56c0e83e34a740292387d9.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
